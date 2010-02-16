@@ -1,0 +1,37 @@
+<% @event ||= Event.new %>
+<% remote_form_for @event do |f| %>
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :starts_at, 'Start time' %><br />
+    <%= f.calendar_date_select :starts_at %>
+  </p>
+  <p>
+    <%= f.label :ends_at, 'End time' %><br />
+    <%= f.calendar_date_select :ends_at %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description, :cols => 39, :rows => 9, :style => "width: 100%;" %>
+  </p>
+  <p>
+    <%= f.label :files %>
+    <div id="uploads_drop_box">
+      Drag files here
+      <% for upload in @event.uploads %>
+      <div id="event_<%= dom_id(upload) %>" class="upload <%= File.extname(upload.attachment_file_name)[1..-1] %>">
+        <%= link_to upload.attachment_file_name, upload.attachment.url %>
+        <%= hidden_field_tag 'event[upload_ids][]', upload.id %>
+        <%= link_to_function "delete", "$('event_#{dom_id(upload)}').remove()", :class => "delete" %>
+      </div>
+      <% end %>
+    </div>
+    <script>
+      initDropBox();
+    </script>
+  </p>
+  <%= f.error_messages %>
+  <p><%= f.submit(@event.new_record? ? "Create" : "Save") %></p>
+<% end %>

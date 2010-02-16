@@ -1,0 +1,6 @@
+if @event.new_record?
+  page.replace_html 'event_form', :partial => 'form'
+else
+  page.call 'showNotice', 'Event successfully created.'
+  page.call 'insertEvent', @event.id, @event.split.map{|e| [e.starts_at.strftime("%m-%d-%Y"), render(e)]}
+end

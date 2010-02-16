@@ -1,0 +1,10 @@
+if @success
+  page.call 'showNotice', 'Successfully updated event.'
+  page.select(".event.#{@event.id}").invoke('remove')
+  @event.split.each do |e|
+    page << "if($('#{e.starts_at.to_s(:day_id)}')){$('#{e.starts_at.to_s(:day_id)}').insert('#{escape_javascript(render(e))}')};"
+  end
+  page.call  'showEvent' , @event.id
+  page.replace_html 'event_form', :partial => 'form'
+end
+page.replace_html 'event_form', :partial => 'form'
