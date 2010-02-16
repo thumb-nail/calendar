@@ -1,7 +1,7 @@
 class CalendarController < ApplicationController
   def index
     @uploads = Upload.all
-    @start_time = Time.now - 1.day
+    @start_time = Time.zone.now.midnight - 1.day
     @end_time = @start_time + 3.days
     load_events
   end
@@ -31,5 +31,6 @@ class CalendarController < ApplicationController
       end
       current_day = next_day
     end
+    puts @days.map(&:inspect)
   end
 end
