@@ -9,7 +9,7 @@
     }, :class => 'add-event button' %>
 <%= link_to 'Upload files', new_upload_path, :class => 'upload-file lbOn button' %>
 </div>
-
+<div style="height:30px;"></div>
 <div id="flash_notice" <%= 'style="display:none;"' if flash[:notice].blank? %> onclick="this.hide();"><%= flash[:notice] %></div>
 <div id="flash_error" <%= 'style="display:none;"' if flash[:error].blank? %> onclick="this.hide();"><%= flash[:error] %></div>
 
