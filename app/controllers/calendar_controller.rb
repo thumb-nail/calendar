@@ -16,21 +16,6 @@ class CalendarController < ApplicationController
   private
   
   def load_events
-    events = Event.between(@start_time, @end_time).ordered
-    events = events.collect{|e| e.split(@start_time, @end_time)}.flatten
-    @days = []
-    day_index = 0
-    event_index = 0
-    current_day = @start_time
-    while current_day < @end_time do
-      @days << {:day => current_day, :events => []}
-      next_day = current_day + 1.day
-      while (event_index < events.size) and events[event_index].starts_at < next_day
-        @days[-1][:events] << events[event_index]
-        event_index += 1
-      end
-      current_day = next_day
-    end
-    puts @days.map(&:inspect)
+    @days = Event.by_days(@start_time, @end_time)
   end
 end
